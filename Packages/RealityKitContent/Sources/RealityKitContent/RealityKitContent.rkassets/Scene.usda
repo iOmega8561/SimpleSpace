@@ -1,0 +1,271 @@
+#usda 1.0
+(
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+reorder rootPrims = ["Root", "SpaceMaterial"]
+
+def Xform "Root"
+{
+    reorder nameChildren = ["GridMaterial", "Earth", "SkySphere", "SpaceMaterial", "MoonOrbit", "EarthRotation", "EarthOrbit"]
+    rel material:binding = None (
+        bindMaterialAs = "weakerThanDescendants"
+    )
+
+    def "GridMaterial" (
+        active = true
+        references = @Materials/GridMaterial.usda@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "Earth" (
+        active = true
+        references = @Earth.usdz@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 1.15, -1.5)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+    }
+
+    def "SkySphere" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        customData = {
+            dictionary RE = {
+                dictionary mesh = {
+                    dictionary v1 = {
+                        bool reorderVertexCaching = 0
+                    }
+                }
+            }
+        }
+        references = @SkySphere.usdz@
+    )
+    {
+        rel material:binding = </Root/SpaceMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        float3 xformOp:scale = (1, 1, 1)
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = [
+                </Root/SkySphere/OnAddedToScene>,
+                </Root/SkySphere/OnAddedToScene2>,
+                </Root/SkySphere/OnAddedToScene3>,
+            ]
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnAddedToScene"
+        {
+            rel actions = </Root/SkySphere/OnAddedToScene/Action>
+            uniform bool exclusive
+            rel triggers = </Root/SkySphere/OnAddedToScene/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/SkySphere>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/MoonOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/SkySphere/OnAddedToScene/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+
+        def Preliminary_Behavior "OnAddedToScene2"
+        {
+            rel actions = </Root/SkySphere/OnAddedToScene2/Action>
+            uniform bool exclusive
+            rel triggers = </Root/SkySphere/OnAddedToScene2/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/SkySphere>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/EarthRotation>
+                rel animationLibraryKeyOverrideKey = </Root/SkySphere/OnAddedToScene2/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+
+        def Preliminary_Behavior "OnAddedToScene3"
+        {
+            rel actions = </Root/SkySphere/OnAddedToScene3/Action>
+            uniform bool exclusive
+            rel triggers = </Root/SkySphere/OnAddedToScene3/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/SkySphere>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/EarthOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/SkySphere/OnAddedToScene3/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+    }
+
+    def Material "SpaceMaterial"
+    {
+        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
+        token outputs:realitykit:vertex
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+
+        def Shader "PreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
+            float inputs:metallic
+            float inputs:opacity = 1
+            float inputs:roughness = 1
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (93.5, 100.5)
+            int ui:nodegraph:node:stackingOrder = 7
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:diffuseColor"]
+        }
+
+        def Shader "Image"
+        {
+            uniform token info:id = "ND_image_color3"
+            asset inputs:file = @stars-galaxy-3840x2160-10307.jpg@
+            color3f outputs:out
+            float2 ui:nodegraph:node:pos = (-116.171875, 57.746094)
+            int ui:nodegraph:node:stackingOrder = 8
+        }
+    }
+
+    def "Moon" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, 0, 0)
+        }
+        references = @Moon.usdz@
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (0.3, 0.3, 0.3)
+        float3 xformOp:translate = (0.5, 1.15, -1.5)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "PointLight"
+        {
+            uniform token info:id = "RealityKit.PointLight"
+            float intensity = 100
+        }
+    }
+
+    def RealityKitTimeline "MoonOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 600
+                uniform token info:id = "C697BFCE-0285-4351-A88D-EE8E82BCB542"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Earth>
+                float revolutions = 25
+                double startTime = 0
+                rel target = </Root/Moon>
+            }
+        }
+    }
+
+    def "Sun" (
+        active = true
+        references = @Sun.usdz@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 1.15, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "PointLight"
+        {
+            uniform token info:id = "RealityKit.PointLight"
+            float intensity = 50000
+        }
+    }
+
+    def RealityKitTimeline "EarthRotation"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 600
+                uniform token info:id = "35CFA876-0B7F-4372-B817-1B4E4BBCC8AB"
+                float revolutions = 20
+                token spinDirection = "counterclockwise"
+                double startTime = 0
+                rel target = </Root/Earth>
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "EarthOrbit"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 150
+                uniform token info:id = "5568383B-C5D5-46F5-8AF5-F28050693623"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Sun>
+                double startTime = 0
+                rel target = </Root/Earth>
+            }
+        }
+    }
+}
+
