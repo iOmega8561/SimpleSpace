@@ -6,11 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3E177C6A2D0C49F8000E1568 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 3E177C692D0C49F8000E1568 /* RealityKitContent */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		E32E43882D0897E2002DC617 /* SimpleSpace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleSpace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3E177C6F2D0C4A1C000E1568 /* Packages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		E32E438A2D0897E2002DC617 /* SimpleSpace */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SimpleSpace;
@@ -23,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E177C6A2D0C49F8000E1568 /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -34,6 +44,7 @@
 			children = (
 				E32E438A2D0897E2002DC617 /* SimpleSpace */,
 				E32E43892D0897E2002DC617 /* Products */,
+				3E177C6F2D0C4A1C000E1568 /* Packages */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,10 +72,12 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				3E177C6F2D0C4A1C000E1568 /* Packages */,
 				E32E438A2D0897E2002DC617 /* SimpleSpace */,
 			);
 			name = SimpleSpace;
 			packageProductDependencies = (
+				3E177C692D0C49F8000E1568 /* RealityKitContent */,
 			);
 			productName = SimpleSpace;
 			productReference = E32E43882D0897E2002DC617 /* SimpleSpace.app */;
@@ -94,6 +107,8 @@
 			);
 			mainGroup = E32E437F2D0897E2002DC617;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E32E43892D0897E2002DC617 /* Products */;
 			projectDirPath = "";
@@ -252,7 +267,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = T8HX5554JX;
+				DEVELOPMENT_TEAM = WLW428B75Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -267,12 +282,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.SimpleSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 7;
 			};
 			name = Debug;
 		};
@@ -299,12 +315,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.SimpleSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 7;
 			};
 			name = Release;
 		};
@@ -330,6 +347,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3E177C692D0C49F8000E1568 /* RealityKitContent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RealityKitContent;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E32E43802D0897E2002DC617 /* Project object */;
 }

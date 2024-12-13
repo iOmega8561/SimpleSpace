@@ -12,10 +12,10 @@ struct Star: Identifiable, Hashable {
     let name: String
     let imgname: String
     let description: String
-    let type: String          // Star type (e.g., Main Sequence, Red Giant, White Dwarf)
-    let mass: Double          // in kilograms
-    let radius: Double        // in kilometers
-    let luminosity: Double    // in terms of the Sun's luminosity (L☉)
-    let distanceFromEarth: Double  // in light-years
-    let age: Double           // in billion years
+    let type: String          //star type (e.g., Main Sequence, Red Giant, White Dwarf)
+    let mass: Double          //in kilograms
+    let radius: Double        //in kilometers
+    let luminosity: Double    //in terms of the Sun's luminosity (L☉)
+    let distanceFromEarth: Double  //in light-years
+    let age: Double           //in billion years
 }
