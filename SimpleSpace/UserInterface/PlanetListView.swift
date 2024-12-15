@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct PlanetListView: View {
+    @ObservedObject var model: ViewModel
     
     var body: some View {
         
         List(planets) { planet in
             
-            NavigationLink(destination: PlanetView(planet: planet)) {
+            NavigationLink(destination: PlanetView(model: model, planet: planet)) {
                 HStack {
                     Image(planet.imgname)
                         .resizable()

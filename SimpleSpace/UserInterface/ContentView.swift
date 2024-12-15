@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var model: ViewModel
     var body: some View {
         
         ZStack {
@@ -15,7 +16,7 @@ struct ContentView: View {
             TabView {
                 
                 NavigationStack {
-                    PlanetListView()
+                    PlanetListView(model: model)
                 }
                 .tabItem { Image(systemName: "circle.grid.3x3.fill"); Text("Planets") }
                 
