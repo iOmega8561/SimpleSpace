@@ -1,5 +1,5 @@
 //
-//  PlanetVolume.swift
+//  PlanetVolumeView.swift
 //  SimpleSpace
 //
 //  Created by Mariia Chemerys on 15.12.2024.
