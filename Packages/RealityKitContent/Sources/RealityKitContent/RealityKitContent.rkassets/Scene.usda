@@ -25,9 +25,13 @@ def Xform "Root"
 
     def "Earth" (
         active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
         references = @Earth.usdz@
     )
     {
+        rel material:binding = None (
+            bindMaterialAs = "weakerThanDescendants"
+        )
         float3 xformOp:scale = (1, 1, 1)
         float3 xformOp:translate = (0, 1.15, -1.5)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
@@ -172,22 +176,20 @@ def Xform "Root"
 
     def "Moon" (
         active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
         customData = {
             float3 rotationEulerHint = (0, 0, 0)
         }
         references = @Moon.usdz@
     )
     {
+        rel material:binding = None (
+            bindMaterialAs = "weakerThanDescendants"
+        )
         quatf xformOp:orient = (1, 0, 0, 0)
         float3 xformOp:scale = (0.3, 0.3, 0.3)
         float3 xformOp:translate = (0.5, 1.15, -1.5)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-        def RealityKitComponent "PointLight"
-        {
-            uniform token info:id = "RealityKit.PointLight"
-            float intensity = 100
-        }
     }
 
     def RealityKitTimeline "MoonOrbit"
@@ -213,17 +215,118 @@ def Xform "Root"
 
     def "Sun" (
         active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
         references = @Sun.usdz@
     )
     {
+        rel material:binding = None (
+            bindMaterialAs = "weakerThanDescendants"
+        )
         float3 xformOp:scale = (1, 1, 1)
         float3 xformOp:translate = (0, 1.15, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "PointLight"
         {
+            float attenuationFalloffExponent = 2
+            float attenuationRadius = 10
             uniform token info:id = "RealityKit.PointLight"
             float intensity = 50000
+        }
+
+        over "geom"
+        {
+            over "realistic"
+            {
+                over "materials"
+                {
+                    over "sun_realistic"
+                    {
+                        string inputs:sun_realistic_ao_1:varname (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (177.25, 1105)
+                                }
+                            }
+                        )
+                        string inputs:sun_realistic_bc:varname (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (464.25, 1105)
+                                }
+                            }
+                        )
+                        string inputs:sun_realistic_e:varname (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (743.75, 1105)
+                                }
+                            }
+                        )
+                        string inputs:sun_realistic_n:varname (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (1023.75, 1105)
+                                }
+                            }
+                        )
+                        string inputs:sun_realistic_r_1:varname (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (1310.75, 1105)
+                                }
+                            }
+                        )
+                        token outputs:realitykit:vertex
+                        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1399.75, 375)
+
+                        over "sun_realistic_n_mtlx_offset"
+                        {
+                            float2 ui:nodegraph:node:pos = (880.25, 100.5)
+                        }
+
+                        over "sun_realistic_e_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (350, 361.5)
+                        }
+
+                        over "sun_realistic_n_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (350, 100.5)
+                        }
+
+                        over "sun_realistic_r_1_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (618.5, 746.5)
+                        }
+
+                        over "sun_realistic_n_mtlx_scale"
+                        {
+                            float2 ui:nodegraph:node:pos = (618.5, 100.5)
+                        }
+
+                        over "Lookup_st"
+                        {
+                            float2 ui:nodegraph:node:pos = (91, 622.5)
+                        }
+
+                        over "sun_realistic_bc_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (618.5, 485.5)
+                        }
+
+                        over "sun_realistic_01_mat_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (1146.5, 375)
+                        }
+
+                        over "sun_realistic_ao_1_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (880.25, 917)
+                        }
+                    }
+                }
+            }
         }
     }
 
