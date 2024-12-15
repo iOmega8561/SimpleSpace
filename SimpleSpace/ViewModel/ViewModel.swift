@@ -9,5 +9,5 @@ import SwiftUI
 /// The data that the app uses to configure its views.
 class ViewModel: ObservableObject {
     @Published var isShowingPlanet: Bool = false
-    @Published var shownPlanet: Planet?
+    @Published var planetShown: Planet?
 }
