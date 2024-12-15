@@ -21,7 +21,7 @@ struct ContentView: View {
                 .tabItem { Image(systemName: "circle.grid.3x3.fill"); Text("Planets") }
                 
                 NavigationStack {
-                    StarListView()
+                    StarListView(model: model)
                 }
                 .tabItem { Image(systemName: "star.fill"); Text("Stars") }
             }

@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct StarListView: View {
-    
+    @ObservedObject var model: ViewModel
     var body: some View {
         
         List(stars) { star in
             
-            NavigationLink(destination: StarView(star: star)) {
+            NavigationLink(destination: StarView(model: model, star: star)) {
                 HStack {
                     Image(star.imgname)
                         .resizable()
@@ -29,5 +29,8 @@ struct StarListView: View {
             
         }
         .navigationTitle("Stars")
+        .onAppear {
+            model.isShowingPlanet = false
+        }
     }
 }

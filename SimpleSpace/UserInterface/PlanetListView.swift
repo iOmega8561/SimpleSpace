@@ -28,5 +28,8 @@ struct PlanetListView: View {
             
         }
         .navigationTitle("Planets")
+        .onAppear {
+            model.isShowingPlanet = false
+        }
     }
 }
