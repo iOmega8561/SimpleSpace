@@ -23,7 +23,8 @@ struct SimpleSpaceApp: App {
     
     var body: some Scene {
         WindowGroup(id: contentViewID) {
-            ContentView(model: model)
+            ContentView()
+                .environment(model)
         }
         .windowResizability(.contentSize)
         
@@ -46,7 +47,8 @@ struct SimpleSpaceApp: App {
         
         // A volume that displays a planet
         WindowGroup(id: planetVolumeID) {
-            PlanetVolumeView(model: model)
+            PlanetVolumeView()
+                .environment(model)
                 .onDisappear {
                     model.isShowingPlanet = false
                 }

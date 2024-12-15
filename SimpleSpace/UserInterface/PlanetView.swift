@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlanetView: View {
-    @ObservedObject var model: ViewModel
+    @Environment(ViewModel.self) private var model
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     
     var planet: Planet
@@ -33,7 +33,7 @@ struct PlanetView: View {
                     .fontWeight(.bold)
                     .padding(.top)
                 
-                PlanetVolumeButton(model: model)
+                PlanetVolumeButton()
                 
                 Text(planet.description)
                     .font(.body)
@@ -101,23 +101,5 @@ struct PlanetView: View {
         .onAppear {
             model.planetShown = planet
         }
-    }
-}
-
-struct PlanetVolumeButton: View {
-    @ObservedObject var model: ViewModel
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
-
-    var body: some View {
-        Toggle("Show Planet", isOn: $model.isShowingPlanet)
-            .onChange(of: model.isShowingPlanet) { _, isShowing in
-                if model.isShowingPlanet {
-                    openWindow(id: "PlanetVolume")
-                } else {
-                    dismissWindow(id: "PlanetVolume")
-                }
-            }
-            .toggleStyle(.button)
     }
 }

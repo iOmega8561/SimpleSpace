@@ -7,7 +7,8 @@
 import SwiftUI
 
 /// The data that the app uses to configure its views.
-class ViewModel: ObservableObject {
-    @Published var isShowingPlanet: Bool = false
-    @Published var planetShown: Planet?
+@Observable
+class ViewModel {
+    var isShowingPlanet: Bool = false
+    var planetShown: Planet?
 }

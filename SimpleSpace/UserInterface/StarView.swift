@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct StarView: View {
-    @ObservedObject var model: ViewModel
+    @Environment(ViewModel.self) private var model
+    
     var star: Star
     
     var body: some View {

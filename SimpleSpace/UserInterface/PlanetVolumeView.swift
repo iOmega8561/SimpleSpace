@@ -10,7 +10,7 @@ import RealityKit
 import RealityKitContent
 
 struct PlanetVolumeView: View {
-    @ObservedObject var model: ViewModel
+    @Environment(ViewModel.self) private var model
 
     var body: some View {
         RealityView { content in
