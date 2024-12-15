@@ -11,6 +11,8 @@ struct PlanetVolumeButton: View {
     @Environment(ViewModel.self) private var model
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
+    
+    let planetVolumeID = "PlanetVolume"
 
     var body: some View {
         @Bindable var model = model
@@ -18,9 +20,9 @@ struct PlanetVolumeButton: View {
         Toggle("Show Planet", isOn: $model.isShowingPlanet)
             .onChange(of: model.isShowingPlanet) { _, isShowing in
                 if model.isShowingPlanet {
-                    openWindow(id: "PlanetVolume")
+                    openWindow(id: planetVolumeID)
                 } else {
-                    dismissWindow(id: "PlanetVolume")
+                    dismissWindow(id: planetVolumeID)
                 }
             }
             .toggleStyle(.button)
