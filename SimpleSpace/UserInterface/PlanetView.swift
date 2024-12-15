@@ -98,6 +98,9 @@ struct PlanetView: View {
         }
         .navigationTitle(planet.name)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            model.planetShown = planet
+        }
     }
 }
 
