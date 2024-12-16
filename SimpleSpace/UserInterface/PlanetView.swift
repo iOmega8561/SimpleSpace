@@ -9,14 +9,12 @@ import SwiftUI
 
 struct PlanetView: View {
     
-    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
-    
     var planet: Planet
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-
+                // Planet Image
                 Image(planet.imgname)
                     .resizable()
                     .scaledToFit()
@@ -28,27 +26,21 @@ struct PlanetView: View {
                     )
                     .shadow(radius: 10)
                 
+                // Planet Name
                 Text(planet.name)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top)
                 
+                // Planet Description
                 Text(planet.description)
                     .font(.body)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal)
                 
-                if planet.name == "Earth" {
-                    Button {
-                        Task { await openImmersiveSpace(id: "ImmersiveSpace") }
-                    } label: {
-                        Text("Explore planet's orbit")
-                            .font(.title2)
-                    }
-                }
-                
                 Divider()
                 
+                // Planet Details
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
                         Text("Diameter:")
@@ -94,7 +86,9 @@ struct PlanetView: View {
             }
             .padding()
         }
+#if os(iOS)
         .navigationTitle(planet.name)
+		#endif
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

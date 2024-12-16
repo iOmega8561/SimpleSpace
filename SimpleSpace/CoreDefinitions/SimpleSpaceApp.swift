@@ -9,42 +9,28 @@ import SwiftUI
 
 @main
 struct SimpleSpaceApp: App {
-    
-    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
-    @Environment(\.dismissWindow) private var dismissWindow
-    
-    @State private var immersionStyle: ImmersionStyle = .mixed
-    
-    let immersiveSpaceID = "ImmersiveSpace"
-    let contentViewID = "ContentView"
-    let buttonOverlayID = "ButtonOverlay"
-    
+#if os(iOS)
     var body: some Scene {
-        WindowGroup(id: contentViewID) {
+        WindowGroup {
             ContentView()
         }
-        .windowResizability(.contentSize)
-        
-        WindowGroup(id: buttonOverlayID) {
-            ButtonOverlay()
-                .fixedSize()
-        }
-        .defaultWindowPlacement { content, context in
-            
-            //place the window in a cool way
-            let size = content.sizeThatFits(.unspecified)
-            if let contentViewWindow = context.windows.first(where: { $0.id == contentViewID }) {
-                
-                dismissWindow(id: contentViewID)
-                return WindowPlacement(.trailing(contentViewWindow), size: size)
-            } else {
-                fatalError("ContentView window not found")
-            }
-        }
-        
-        ImmersiveSpace(id: immersiveSpaceID) {
-            ImmersiveView()
-        }
-        .immersionStyle(selection: $immersionStyle, in: .full)
     }
+#endif
+	
+#if os(visionOS)
+	var body: some Scene {
+		WindowGroup {
+			ContentViewPlanets()
+		}
+		WindowGroup("star", id: "star") {
+			ContentViewStars()
+		}
+	}
+#endif
+}
+
+func openNewWindow() async {
+	Task {
+		await ContentViewStars()
+	}
 }
