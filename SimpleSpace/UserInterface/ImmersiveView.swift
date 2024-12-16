@@ -1,3 +1,9 @@
+//
+//  ContentView.swift
+//  SimpleSpace
+//
+//  Created by Davide Castaldi on 10/12/24.
+//
 
 import SwiftUI
 import RealityKit

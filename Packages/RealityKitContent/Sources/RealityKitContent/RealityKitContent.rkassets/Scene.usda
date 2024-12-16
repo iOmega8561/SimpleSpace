@@ -228,8 +228,8 @@ def Xform "Root"
 
         def RealityKitComponent "PointLight"
         {
-            float attenuationFalloffExponent = 2
-            float attenuationRadius = 10
+            float attenuationFalloffExponent = 1
+            float attenuationRadius = 1000
             uniform token info:id = "RealityKit.PointLight"
             float intensity = 50000
         }
