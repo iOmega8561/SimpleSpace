@@ -15,7 +15,7 @@ struct StarView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-
+                // Star Image
                 Image(star.imgname)
                     .resizable()
                     .scaledToFill()
@@ -27,11 +27,13 @@ struct StarView: View {
                     )
                     .shadow(radius: 10)
                 
+                // Star Name
                 Text(star.name)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top)
                 
+                // Star Description
                 Text(star.description)
                     .font(.body)
                     .multilineTextAlignment(.leading)
@@ -39,6 +41,7 @@ struct StarView: View {
                 
                 Divider()
                 
+                // Star Details
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
                         Text("Type:")
@@ -84,7 +87,6 @@ struct StarView: View {
             }
             .padding()
         }
-        .navigationTitle(star.name)
         .onAppear {
             model.isShowingPlanet = false
         }

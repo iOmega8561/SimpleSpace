@@ -22,9 +22,19 @@ struct SimpleSpaceApp: App {
     let planetVolumeID = "PlanetVolume"
     
     var body: some Scene {
-        WindowGroup(id: contentViewID) {
-            ContentView()
-                .environment(model)
+        
+        /*WindowGroup {
+         ContentView()
+         .environment(model)
+         }*/
+        
+        WindowGroup {
+            ContentViewPlanets()
+        }
+        .windowResizability(.contentSize)
+        
+        WindowGroup("star", id: "star") {
+            ContentViewStars()
         }
         .windowResizability(.contentSize)
         
@@ -61,4 +71,10 @@ struct SimpleSpaceApp: App {
         }
         .immersionStyle(selection: $immersionStyle, in: .full)
     }
+}
+
+func openNewWindow() async {
+	Task {
+		await ContentViewStars()
+	}
 }
