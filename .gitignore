@@ -9,6 +9,9 @@ xcuserdata/
 *.xcscmblueprint
 *.xccheckout
 
+## Reality Composet user data
+*.rcuserdata
+
 ## macos
 .DS_Store
 
