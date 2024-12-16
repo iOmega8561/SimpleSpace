@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StarView: View {
+    @Environment(ViewModel.self) private var model
     
     var star: Star
     
@@ -86,8 +87,8 @@ struct StarView: View {
             }
             .padding()
         }
-#if os(iOS)
-        .navigationTitle(star.name)
-#endif
+        .onAppear {
+            model.isShowingPlanet = false
+        }
     }
 }
