@@ -15,8 +15,10 @@ struct SimpleSpaceApp: App {
     
     @State private var immersionStyle: ImmersionStyle = .mixed
     @State private var model = ViewModel()
+    @State private var gestureModel = GestureModel()
     
     let immersiveSpaceID = "ImmersiveSpace"
+    let immersiveHandTrackingSpaceID = "HandTrackingImmersiveSpace"
     let contentViewID = "ContentView"
     let buttonOverlayID = "ButtonOverlay"
     let planetVolumeID = "PlanetVolume"
@@ -61,5 +63,11 @@ struct SimpleSpaceApp: App {
             ImmersiveView()
         }
         .immersionStyle(selection: $immersionStyle, in: .full)
+        
+        ImmersiveSpace(id: immersiveHandTrackingSpaceID) {
+            ImmersiveHandTrackingView()
+                .environment(gestureModel)
+        }
+        .persistentSystemOverlays(.hidden)
     }
 }

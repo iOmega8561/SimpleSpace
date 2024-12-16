@@ -1,0 +1,247 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (448.60.4)"
+    }
+    defaultPrim = "sun_and_solar_flares"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "sun_and_solar_flares" (
+    active = true
+    references = @sun_and_solar_flares.usdz@
+)
+{
+    reorder nameChildren = ["Spinning_Animation", "Loop_Spinning_Animation"]
+    quatf xformOp:orient = (1, 0, 0, 0)
+    float3 xformOp:scale = (0.0005, 0.0005, 0.0005)
+    float3 xformOp:translate = (0, 0.06, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def RealityKitComponent "Anchoring"
+    {
+        uniform token info:id = "RealityKit.Anchoring"
+
+        def RealityKitStruct "descriptor"
+        {
+            token location = "Palm"
+            token orientation = "Right"
+            token type = "Hand"
+        }
+    }
+
+    def RealityKitComponent "VFXEmitter"
+    {
+        uniform token info:id = "RealityKit.VFXEmitter"
+
+        def RealityKitStruct "currentState"
+        {
+            token birthDirection = "Normal"
+            token birthLocation = "Surface"
+            token emitterShape = "Sphere"
+            bool isLocal = 0
+            bool isLocalFields = 0
+            bool loops = 1
+            float particleSpeed = 0.055
+            float radialAmount = 6.2831855
+            float3 shapeSize = (0.1, 0.1, 0.1)
+            token spawnOccasion = "OnDeath"
+
+            def RealityKitStruct "mainEmitter"
+            {
+                float4 endColorA = (0.69043165, 0.12835266, 0, 1)
+                float4 startColorA = (0.6653884, 0.6653864, 0.6198908, 1)
+                bool useEndColor = 1
+                bool useEndColorRange = 0
+                bool useStartColorRange = 0
+            }
+
+            def RealityKitStruct "spawnedEmitter"
+            {
+            }
+        }
+    }
+
+    over "Materials"
+    {
+        over "sunouter"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+
+            over "pbr_shader"
+            {
+                float inputs:opacityThreshold = 0.1
+            }
+        }
+
+        over "flare"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+
+            over "pbr_shader"
+            {
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0
+                float inputs:opacityThreshold = 0.1
+            }
+        }
+
+        over "sun_inner"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+
+            over "pbr_shader"
+            {
+                float inputs:opacityThreshold = 0.1
+            }
+        }
+
+        over "blowout"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+
+            over "pbr_shader"
+            {
+                float inputs:opacityThreshold = 0.1
+            }
+        }
+    }
+
+    def RealityKitTimeline "Spinning_Animation"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            reorder nameChildren = ["Spin", "Notification"]
+            def RealityKitAction "Notification"
+            {
+                string actionKind = "notification"
+                double duration = 0
+                uniform token info:id = "AC7BDEFD-7E43-44FB-AF4F-693BE0144290"
+                string notificationName = "EndOfAnimation"
+                double startTime = 25
+                rel target = </sun_and_solar_flares>
+            }
+
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 25
+                uniform token info:id = "E1FF1F2F-8BCA-4EDF-9528-893AFA731D46"
+                double startTime = 0
+                rel target = </sun_and_solar_flares>
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "linear"
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "Loop_Spinning_Animation"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Notification"
+            {
+                string actionKind = "notification"
+                uniform token info:id = "2F138708-4CCF-470D-A4BD-2D7D64599E31"
+                string notificationName = "StartOfAnimation"
+                double startTime = 0
+                rel target = </sun_and_solar_flares>
+            }
+        }
+    }
+
+    def RealityKitComponent "RCP_BehaviorsContainer"
+    {
+        rel behaviors = [
+            </sun_and_solar_flares/OnAddedToScene>,
+            </sun_and_solar_flares/OnNotification>,
+            </sun_and_solar_flares/OnNotification2>,
+        ]
+        uniform token info:id = "RCP.BehaviorsContainer"
+    }
+
+    def Preliminary_Behavior "OnAddedToScene"
+    {
+        rel actions = </sun_and_solar_flares/OnAddedToScene/Action>
+        uniform bool exclusive
+        rel triggers = </sun_and_solar_flares/OnAddedToScene/Trigger>
+
+        def Preliminary_Trigger "Trigger"
+        {
+            rel affectedObjects = </sun_and_solar_flares>
+            token info:id = "SceneTransition"
+        }
+
+        def Preliminary_Action "Action"
+        {
+            rel affectedObjects = </sun_and_solar_flares>
+            rel animationLibraryKey = </sun_and_solar_flares/Spinning_Animation>
+            rel animationLibraryKeyOverrideKey = </sun_and_solar_flares/OnAddedToScene/Trigger>
+            token info:id = "PlayTimeline"
+            int loops = 0
+            int performCount = 1
+            token type = "serial"
+        }
+    }
+
+    def Preliminary_Behavior "OnNotification"
+    {
+        rel actions = </sun_and_solar_flares/OnNotification/Action>
+        uniform bool exclusive
+        rel triggers = </sun_and_solar_flares/OnNotification/Trigger>
+
+        def Preliminary_Trigger "Trigger"
+        {
+            rel affectedObjects = </sun_and_solar_flares>
+            string identifier = "EndOfAnimation"
+            token info:id = "Notification"
+        }
+
+        def Preliminary_Action "Action"
+        {
+            rel affectedObjects = </sun_and_solar_flares>
+            rel animationLibraryKey = </sun_and_solar_flares/Loop_Spinning_Animation>
+            rel animationLibraryKeyOverrideKey = </sun_and_solar_flares/OnNotification/Trigger>
+            token info:id = "PlayTimeline"
+            int loops = 0
+            int performCount = 1
+            token type = "serial"
+        }
+    }
+
+    def Preliminary_Behavior "OnNotification2"
+    {
+        rel actions = </sun_and_solar_flares/OnNotification2/Action>
+        uniform bool exclusive
+        rel triggers = </sun_and_solar_flares/OnNotification2/Trigger>
+
+        def Preliminary_Trigger "Trigger"
+        {
+            rel affectedObjects = </sun_and_solar_flares>
+            string identifier = "StartOfAnimation"
+            token info:id = "Notification"
+        }
+
+        def Preliminary_Action "Action"
+        {
+            rel affectedObjects = </sun_and_solar_flares>
+            rel animationLibraryKey = </sun_and_solar_flares/Spinning_Animation>
+            rel animationLibraryKeyOverrideKey = </sun_and_solar_flares/OnNotification2/Trigger>
+            token info:id = "PlayTimeline"
+            int loops = 0
+            int performCount = 1
+            token type = "serial"
+        }
+    }
+}
+
