@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlanetListView: View {
+    @Environment(ViewModel.self) private var model
     
     var body: some View {
         
@@ -27,5 +28,8 @@ struct PlanetListView: View {
             
         }
         .navigationTitle("Planets")
+        .onAppear {
+            model.isShowingPlanet = false
+        }
     }
 }

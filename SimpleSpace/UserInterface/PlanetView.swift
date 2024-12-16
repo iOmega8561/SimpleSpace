@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlanetView: View {
-    
+    @Environment(ViewModel.self) private var model
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     
     var planet: Planet
@@ -32,6 +32,8 @@ struct PlanetView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top)
+                
+                PlanetVolumeButton()
                 
                 Text(planet.description)
                     .font(.body)
@@ -96,6 +98,8 @@ struct PlanetView: View {
         }
         .navigationTitle(planet.name)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            model.planetShown = planet
+        }
     }
 }
-

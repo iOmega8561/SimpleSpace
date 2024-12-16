@@ -14,14 +14,17 @@ struct SimpleSpaceApp: App {
     @Environment(\.dismissWindow) private var dismissWindow
     
     @State private var immersionStyle: ImmersionStyle = .mixed
+    @State private var model = ViewModel()
     
     let immersiveSpaceID = "ImmersiveSpace"
     let contentViewID = "ContentView"
     let buttonOverlayID = "ButtonOverlay"
+    let planetVolumeID = "PlanetVolume"
     
     var body: some Scene {
         WindowGroup(id: contentViewID) {
             ContentView()
+                .environment(model)
         }
         .windowResizability(.contentSize)
         
@@ -41,6 +44,17 @@ struct SimpleSpaceApp: App {
                 fatalError("ContentView window not found")
             }
         }
+        
+        // A volume that displays a planet
+        WindowGroup(id: planetVolumeID) {
+            PlanetVolumeView()
+                .environment(model)
+                .onDisappear {
+                    model.isShowingPlanet = false
+                }
+        }
+        .windowStyle(.volumetric)
+        .defaultSize(width: 0.6, height: 0.6, depth: 0.6, in: .meters)
         
         ImmersiveSpace(id: immersiveSpaceID) {
             ImmersiveView()

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(ViewModel.self) private var model
+    
     var body: some View {
         
         ZStack {
