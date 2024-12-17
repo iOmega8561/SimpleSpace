@@ -33,6 +33,11 @@ struct StarView: View {
                     .fontWeight(.bold)
                     .padding(.top)
                 
+                // Show
+                if star.name == "Sun"{
+                    ImmersionViewButton()
+                }
+                
                 // Star Description
                 Text(star.description)
                     .font(.body)

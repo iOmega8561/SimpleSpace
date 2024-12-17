@@ -10,5 +10,6 @@ import SwiftUI
 @Observable
 class ViewModel {
     var isShowingPlanet: Bool = false
+    var isShowingStar: Bool = false
     var planetShown: Planet?
 }
