@@ -11,10 +11,12 @@ import RealityKitContent
 
 struct ImmersiveView: View {
     
+    @Environment(GestureModel.self) private var gestureModel
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
-    @State private var sceneEntity: Entity?
-    
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
+
+    let contentViewID = "ContentView"
     let buttonOverlayID = "ButtonOverlay"
 
     var body: some View {
@@ -22,12 +24,20 @@ struct ImmersiveView: View {
         RealityView { content in
             let scene = try? await Entity(named: "Scene", in: realityKitContentBundle)
             content.add(scene!)
+            
+            Task {
+                await gestureModel.start()
+                await gestureModel.publishHandTrackingUpdates()
+            }
+        } update: { content in
+            if gestureModel.snapGestureActivated() {
+                
+                dismissWindow(id: buttonOverlayID)
+                Task { await dismissImmersiveSpace() }
+            }
         }
         .onAppear {
             openWindow(id: buttonOverlayID)
-        }
-        .onDisappear {
-            dismissWindow(id: buttonOverlayID)
         }
     }
 }
