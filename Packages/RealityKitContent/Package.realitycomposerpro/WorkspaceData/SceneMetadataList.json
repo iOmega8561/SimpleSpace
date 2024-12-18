@@ -9,6 +9,15 @@
       [
         "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
         "Root",
+        "GridMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
+        "Root",
         "Sphere"
       ],
       {
@@ -18,15 +27,6 @@
       [
         "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
         "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
-        "Root",
-        "GridMaterial"
       ],
       {
         "isExpanded" : true,
@@ -43,16 +43,9 @@
     "objectMetadataList" : [
       [
         "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
         "Root",
-        "SpaceMaterial"
+        "Moon_Orbit",
+        "Track"
       ],
       {
         "isExpanded" : true,
@@ -81,7 +74,25 @@
       [
         "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
         "Root",
-        "Moon_Orbit",
+        "MoonOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
+        "Root",
+        "Timeline",
         "Track"
       ],
       {
@@ -101,27 +112,16 @@
       [
         "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
         "Root",
+        "SpaceMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
+        "Root",
         "EarthOrbit"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
-        "Root",
-        "MoonOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "26DBAE76-5DD8-47B6-A085-1B4ADA111097",
-        "Root",
-        "Timeline",
-        "Track"
       ],
       {
         "isExpanded" : true,
@@ -162,6 +162,28 @@
         "isExpanded" : true,
         "isLocked" : false
       }
+    ]
+  },
+  "66CCB73C-E666-42CF-9CA0-6AEB8FF8D305" : {
+    "objectMetadataList" : [
+      [
+        "66CCB73C-E666-42CF-9CA0-6AEB8FF8D305",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "869BDAAD-B2A9-4356-955E-F7857C12E176" : {
+    "objectMetadataList" : [
+
+    ]
+  },
+  "91D197D1-869A-4096-8122-5257D98F005D" : {
+    "objectMetadataList" : [
+
     ]
   },
   "FBD8436F-6B8B-4B82-99B5-995D538B4704" : {
