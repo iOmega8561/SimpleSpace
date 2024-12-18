@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct PlanetView: View {
+    
     @Environment(ViewModel.self) private var model
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissWindow) private var dismissWindow
+    
+    let contentViewID = "ContentView"
+    let immersiveSpaceID = "ImmersiveSpace"
     
     var planet: Planet
     
@@ -40,6 +45,15 @@ struct PlanetView: View {
                     .font(.body)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal)
+                
+                if planet.name == "Earth" {
+                    Button {
+                        Task { await openImmersiveSpace(id: immersiveSpaceID) }
+                    } label: {
+                        Text("Explore planet's orbit")
+                            .font(.title2)
+                    }
+                }
                 
                 Divider()
                 
