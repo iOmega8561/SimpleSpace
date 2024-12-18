@@ -16,38 +16,35 @@ struct ContentView: View {
     
     var body: some View {
         
-        ZStack {
-            
-            TabView {
-                
-                NavigationSplitView {
-                    PlanetListView()
-                } detail: {
-                    if selectedPlanet != nil{
-                        List (planets, id: \.self, selection: $selectedPlanet) { planet in
-                            PlanetView(planet: planet)
-                        }
-                    } else {
-                        PlanetView(planet: planets[0])
+        TabView {
+            NavigationSplitView {
+                PlanetListView()
+            } detail: {
+                if selectedPlanet != nil{
+                    List (planets, id: \.self, selection: $selectedPlanet) { planet in
+                        PlanetView(planet: planet)
                     }
+                } else {
+                    PlanetView(planet: planets[2])
                 }
-                .navigationSplitViewStyle(.balanced)
-                .tabItem { Image(systemName: "circle.grid.3x3.fill"); Text("Planets") }
-                
-                NavigationSplitView {
-                    StarListView()
-                } detail: {
-                    if selectedStar != nil{
-                        List (stars, id: \.self, selection: $selectedStar) { star in
-                            StarView(star: star)
-                        }
-                    } else {
-                        StarView(star: stars[0])
-                    }
-                }
-                .navigationSplitViewStyle(.balanced)
-                .tabItem { Image(systemName: "star.fill"); Text("Stars") }
             }
+            .navigationSplitViewStyle(.balanced)
+            .tabItem { Image(systemName: "circle.grid.3x3.fill"); Text("Planets") }
+            
+            NavigationSplitView {
+                StarListView()
+            } detail: {
+                if selectedStar != nil{
+                    List (stars, id: \.self, selection: $selectedStar) { star in
+                        StarView(star: star)
+                    }
+                } else {
+                    StarView(star: stars[0])
+                }
+            }
+            .navigationSplitViewStyle(.balanced)
+            .tabItem { Image(systemName: "star.fill"); Text("Stars") }
         }
+        
     }
 }
