@@ -13,6 +13,13 @@ class GestureModel: @unchecked Sendable {
     let session = ARKitSession()
     var handTracking = HandTrackingProvider()
     var latestHandTracking: HandsUpdates = .init(left: nil, right: nil)
+    private var wasInContact = false
+    
+    private var previousThumbPosition: SIMD3<Float>?
+    private var previousMiddleFingerPosition: SIMD3<Float>?
+    private var previousTimestamp: TimeInterval?
+    
+    var isSnapGestureActivated: Bool = false
     
     struct HandsUpdates {
         var left: HandAnchor?
@@ -27,6 +34,11 @@ class GestureModel: @unchecked Sendable {
             }
         } catch {
             print("ARKitSession error:", error)
+        }
+        
+        // Continuously check for the snap gesture in a loop.
+        Task {
+            await monitorSnapGesture()
         }
     }
     
@@ -48,6 +60,17 @@ class GestureModel: @unchecked Sendable {
             default:
                 break
             }
+        }
+    }
+    
+    func monitorSnapGesture() async {
+        while true {
+            if snapGestureActivated() {
+                isSnapGestureActivated = true
+                try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
+                isSnapGestureActivated = false
+            }
+            await Task.yield()
         }
     }
   
@@ -81,5 +104,80 @@ class GestureModel: @unchecked Sendable {
         
         // Return true if the wrists are closer than a certain threshold, e.g., 10 centimeters.
         return wristsDistance < 0.10
+    }
+    
+    func snapGestureActivated() -> Bool {
+        guard let leftHandAnchor = latestHandTracking.left,
+              leftHandAnchor.isTracked else {
+            print("Left hand anchor is not tracked.")
+            resetState()
+            return false
+        }
+        
+        guard let leftHandThumb = leftHandAnchor.handSkeleton?.joint(.thumbTip),
+              let leftHandMiddle = leftHandAnchor.handSkeleton?.joint(.middleFingerTip),
+              leftHandThumb.isTracked, leftHandMiddle.isTracked else {
+            print("Thumb or middle finger not tracked.")
+            resetState()
+            return false
+        }
+        
+        let leftThumbPosition = matrix_multiply(
+            leftHandAnchor.originFromAnchorTransform, leftHandThumb.anchorFromJointTransform
+        ).columns.3.xyz
+        
+        let leftMiddleFingerPosition = matrix_multiply(
+            leftHandAnchor.originFromAnchorTransform, leftHandMiddle.anchorFromJointTransform
+        ).columns.3.xyz
+        
+        let distance = simd_distance(leftThumbPosition, leftMiddleFingerPosition)
+        
+        if let prevThumb = previousThumbPosition, let prevMiddle = previousMiddleFingerPosition {
+            let thumbDirection = simd_normalize(leftThumbPosition - prevThumb)
+            let middleDirection = simd_normalize(leftMiddleFingerPosition - prevMiddle)
+            
+            let dotProduct = simd_dot(thumbDirection, middleDirection)
+            let angle = acos(dotProduct)
+            let angleInDegrees = angle * (180.0 / .pi)
+            
+            // Snap gesture parameters
+            let contactThreshold: Float = 0.01
+            let releaseThreshold: Float = 0.05
+            let minSnapAngle: Float = 2.0
+            let maxSnapAngle: Float = 15.0
+            
+            // Validate snap dynamics
+            if distance < contactThreshold {
+                wasInContact = true
+                print("true")
+            }
+            
+            if wasInContact && (distance > releaseThreshold && distance < 0.1) &&
+                angleInDegrees >= minSnapAngle && angleInDegrees <= maxSnapAngle {
+                
+                // Ensure the thumb moves towards the palm and the middle finger moves away slightly
+                let thumbToPalmDirection = simd_normalize(leftThumbPosition - leftHandAnchor.handSkeleton!.joint(.middleFingerMetacarpal).anchorFromJointTransform.columns.3.xyz)
+                let thumbSnapMotion = simd_dot(thumbDirection, thumbToPalmDirection)
+                
+                if thumbSnapMotion > 0.3 { // Validate thumb moves towards palm
+                    print("Thanos did it! \(angleInDegrees), at distance \(distance)")
+                    print("thumbtopalm \(thumbSnapMotion), thumbsnap \(thumbSnapMotion)")
+                    resetState()
+                    return true
+                }
+            }
+        }
+        
+        // Update positions for next frame
+        previousThumbPosition = leftThumbPosition
+        previousMiddleFingerPosition = leftMiddleFingerPosition
+        
+        return false
+    }
+    
+    func resetState() {
+        wasInContact = false
+        previousThumbPosition = nil
+        previousMiddleFingerPosition = nil
     }
 }
