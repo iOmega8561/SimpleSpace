@@ -29,15 +29,22 @@ struct ImmersiveView: View {
                 await gestureModel.start()
                 await gestureModel.publishHandTrackingUpdates()
             }
+            
         } update: { content in
-            if gestureModel.snapGestureActivated() {
-                
-                dismissWindow(id: buttonOverlayID)
-                Task { await dismissImmersiveSpace() }
+            
+        }
+        .onChange(of: gestureModel.isSnapGestureActivated) { _, isActivated in
+            if isActivated {
+                handleSnapGesture()
             }
         }
         .onAppear {
             openWindow(id: buttonOverlayID)
         }
+    }
+    
+    private func handleSnapGesture() {
+        dismissWindow(id: buttonOverlayID)
+        Task { await dismissImmersiveSpace() }
     }
 }

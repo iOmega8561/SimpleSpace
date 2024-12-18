@@ -63,6 +63,9 @@ struct SimpleSpaceApp: App {
         
         ImmersiveSpace(id: immersiveSpaceID) {
             ImmersiveView()
+                .onDisappear {
+                    openWindow(id: contentViewID)
+                }
                 .environment(gestureModel)
         }
         .immersionStyle(selection: $immersionStyle, in: .full)
