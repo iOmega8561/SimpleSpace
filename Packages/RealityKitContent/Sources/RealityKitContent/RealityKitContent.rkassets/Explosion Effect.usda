@@ -8,9 +8,9 @@
     upAxis = "Y"
 )
 
-reorder rootPrims = ["ParticleEmitter", "Root"]
+reorder rootPrims = ["ParticleEmitter", "Root_Particles", "Timeline"]
 
-def Xform "Root" (
+def Xform "Root_Particles" (
     active = true
 )
 {
@@ -42,7 +42,7 @@ def Xform "Root" (
                 token emitterShape = "Sphere"
                 double idleDuration = 3
                 double idleDurationVariation = 0
-                bool isEmitting = 0
+                bool isEmitting = 1
                 bool isLocal = 0
                 bool isLocalFields = 0
                 bool isSpawningEnabled = 0
@@ -115,7 +115,19 @@ def Xform "Root" (
         }
     }
 
-    def Xform "ParticleEmitter_Sparkles"
+    def RealityKitComponent "Anchoring"
+    {
+        uniform token info:id = "RealityKit.Anchoring"
+
+        def RealityKitStruct "descriptor"
+        {
+            token location = "Palm"
+            token orientation = "Right"
+            token type = "Hand"
+        }
+    }
+
+    def Xform "ParticleEmitter_Dust_1"
     {
         float2 ui:nodegraph:node:pos = (20, 20)
         int ui:nodegraph:node:stackingOrder = 1
@@ -134,140 +146,89 @@ def Xform "Root" (
                 token birthLocation = "Surface"
                 int64 burstCount = 100
                 float3 emissionDirection = (0, 1, 0)
-                double emissionDuration = 1
+                double emissionDuration = 0.05
                 double emissionDurationVariation = 0
-                token emitterShape = "Point"
-                double idleDuration = 0
+                token emitterShape = "Sphere"
+                double idleDuration = 3
                 double idleDurationVariation = 0
-                bool isEmitting = 0
+                bool isEmitting = 1
                 bool isLocal = 0
                 bool isLocalFields = 0
-                bool isSpawningEnabled = 1
+                bool isSpawningEnabled = 0
                 bool loops = 0
-                float particleSpeed = 0
-                float particleSpeedVariation = 0
-                bool spawnInheritParentColor = 1
+                float particleSpeed = 0.5
+                float particleSpeedVariation = 0.1
+                float3 shapeSize = (0.01, 0.01, 0.01)
+                bool spawnInheritParentColor = 0
                 token spawnOccasion = "OnDeath"
-                float spawnSpreadFactor = 0.2
-                float spawnSpreadFactorVariation = 0.1
-                float spawnVelocityFactor = 0
+                float spawnSpreadFactor = 0
+                float spawnSpreadFactorVariation = 0
+                float spawnVelocityFactor = 1
                 double warmupDuration = 0
 
                 def RealityKitStruct "mainEmitter"
                 {
-                    float3 acceleration = (0, 0, 0)
-                    token animationRepeatMode = "Looping"
+                    float3 acceleration = (0, -0.05, 0)
+                    token animationRepeatMode = "PlayOnce"
                     token billboardMode = "Billboard"
-                    float birthRate = 1.2
-                    float birthRateVariation = 1
+                    float birthRate = 20000
+                    float birthRateVariation = 0
                     token blendMode = "Additive"
                     float colorEvolutionPower = 1
-                    int64 columnCount = 2
-                    float dampingFactor = 0
+                    int64 columnCount = 4
+                    float dampingFactor = 8
                     float4 endColorA = (0.0013309671, 0.03458923, 1, 1)
                     float4 endColorB = (0.11386989, 0.0064959256, 0.10626237, 1)
                     float frameRate = 0
                     float frameRateVariation = 0
-                    int64 initialFrame = 0
-                    int64 initialFrameVariation = 3
-                    bool isAnimated = 1
+                    int64 initialFrame = 2
+                    int64 initialFrameVariation = 6
+                    bool isAnimated = 0
                     bool isLightingEnabled = 0
                     float noiseAnimationSpeed = 0
-                    float noiseScale = 0
-                    float noiseStrength = 0
-                    token opacityOverLife = "Constant"
+                    float noiseScale = 1
+                    float noiseStrength = 0.1
+                    token opacityOverLife = "LinearFadeOut"
                     float particleAngle = 0
                     float particleAngleVariation = 0
                     float particleAngularVelocity = 0
-                    float particleAngularVelocityVariation = 0
-                    asset particleImage = @ParticleEmitterPresetTextures/flaresheet.exr@
-                    double particleLifeSpan = 0
-                    double particleLifeSpanVariation = 0
-                    float particleMass = 0
-                    float particleMassVariation = 0
-                    float particleSize = 4
+                    float particleAngularVelocityVariation = 1
+                    asset particleImage = @ParticleEmitterPresetTextures/flare.exr@
+                    double particleLifeSpan = 1
+                    double particleLifeSpanVariation = 1
+                    float particleMass = 1
+                    float particleMassVariation = 0.8
+                    float particleSize = 0.01
                     float particleSizeVariation = 0
-                    float3 radialGravityCenter = (0, 0, 0)
-                    float radialGravityStrength = 0
-                    int64 rowCount = 2
+                    float3 radialGravityCenter = (0, -0.1, 0)
+                    float radialGravityStrength = -0.1
+                    int64 rowCount = 4
                     float sizeMultiplierAtEndOfLifespan = 1
-                    float sizeMultiplierAtEndOfLifespanPower = 1
-                    token sortOrder = "IncreasingDepth"
+                    float sizeMultiplierAtEndOfLifespanPower = 0.2
+                    token sortOrder = "DecreasingDepth"
                     float spreadingAngle = 0
-                    float4 startColorA = (1, 0.24919035, 0, 1)
-                    float4 startColorB = (1, 0.23120776, 0.0280627, 1)
+                    float4 startColorA = (0.9301902, 0.45734984, 0.005945394, 0.26)
+                    float4 startColorB = (1, 0.35971782, 0.16883945, 0.07)
                     float stretchFactor = 0
                     bool useEndColor = 0
                     bool useEndColorRange = 0
                     bool useStartColorRange = 1
-                    float3 vortexDirection = (0, 0, 0)
+                    float3 vortexDirection = (0, 1, 0)
                     float vortexStrength = 0
                 }
 
                 def RealityKitStruct "spawnedEmitter"
                 {
-                    float3 acceleration = (0, -0.15, 0)
-                    token animationRepeatMode = "Looping"
-                    token billboardMode = "Billboard"
-                    float birthRate = 39000
-                    float birthRateVariation = 8000
-                    token blendMode = "Additive"
-                    float colorEvolutionPower = 1
-                    int64 columnCount = 2
-                    float dampingFactor = 4
-                    float4 endColorA = (0.0013309671, 0.03458923, 1, 1)
-                    float4 endColorB = (0.11386989, 0.0064959256, 0.10626237, 1)
-                    float frameRate = 12
-                    float frameRateVariation = 3
-                    int64 initialFrame = 0
-                    int64 initialFrameVariation = 3
-                    bool isAnimated = 1
-                    bool isLightingEnabled = 0
-                    float noiseAnimationSpeed = 0.2
-                    float noiseScale = 3
-                    float noiseStrength = 0.02
-                    token opacityOverLife = "LinearFadeOut"
-                    float particleAngle = 0
-                    float particleAngleVariation = 2
-                    float particleAngularVelocity = 0
-                    float particleAngularVelocityVariation = 0
-                    asset particleImage = @ParticleEmitterPresetTextures/flaresheet.exr@
-                    double particleLifeSpan = 1.8
-                    double particleLifeSpanVariation = 0.5
-                    float particleMass = 0.75
-                    float particleMassVariation = 0.5
-                    float particleSize = 0.1
-                    float particleSizeVariation = 0.01
-                    float3 radialGravityCenter = (0, -3, -3)
-                    float radialGravityStrength = 0
-                    int64 rowCount = 2
-                    float sizeMultiplierAtEndOfLifespan = 0.01
-                    float sizeMultiplierAtEndOfLifespanPower = 0.03
-                    token sortOrder = "IncreasingID"
-                    float spreadingAngle = 3
-                    float4 startColorA = (1, 1, 1, 1)
-                    float4 startColorB = (1, 1, 1, 1)
-                    float stretchFactor = 0
-                    bool useEndColor = 0
-                    bool useEndColorRange = 0
-                    bool useStartColorRange = 0
-                    float3 vortexDirection = (0, 1, 0)
-                    float vortexStrength = 0
                 }
             }
         }
     }
+}
 
-    def RealityKitComponent "Anchoring"
+def RealityKitTimeline "Timeline"
+{
+    def RealityKitTrack "Track"
     {
-        uniform token info:id = "RealityKit.Anchoring"
-
-        def RealityKitStruct "descriptor"
-        {
-            token location = "Palm"
-            token orientation = "Right"
-            token type = "Hand"
-        }
     }
 }
 
