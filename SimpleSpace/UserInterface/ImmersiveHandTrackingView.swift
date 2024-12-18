@@ -12,6 +12,7 @@ struct ImmersiveHandTrackingView: View {
     
     @Environment(GestureModel.self) private var gestureModel
     @State private var sunEntity = SunEntity()
+    @State private var explosionEntity = ExplosionEntity()
 
     var body: some View {
         
@@ -20,10 +21,9 @@ struct ImmersiveHandTrackingView: View {
             content.add(sunEntity)
         } update: { content in
             let isGestureRecognized = gestureModel.areWristsClose()
-            if isGestureRecognized {
+            if isGestureRecognized{
                 sunEntity.components[OpacityComponent.self]?.opacity = 0
-            } else{
-                sunEntity.components[OpacityComponent.self]?.opacity = 1
+                content.add(explosionEntity)
             }
         }
 
