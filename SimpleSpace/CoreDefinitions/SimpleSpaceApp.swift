@@ -12,6 +12,7 @@ struct SimpleSpaceApp: App {
     
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.openWindow) private var openWindow
     
     @State private var immersionStyle: ImmersionStyle = .mixed
     @State private var model = ViewModel()
@@ -25,7 +26,7 @@ struct SimpleSpaceApp: App {
     
     var body: some Scene {
         
-        WindowGroup {
+        WindowGroup(id: contentViewID) {
             ContentView()
                 .environment(model)
         }
@@ -35,6 +36,7 @@ struct SimpleSpaceApp: App {
             ButtonOverlay()
                 .fixedSize()
         }
+        .windowResizability(.contentSize)
         .defaultWindowPlacement { content, context in
             
             //place the window in a cool way
@@ -61,6 +63,7 @@ struct SimpleSpaceApp: App {
         
         ImmersiveSpace(id: immersiveSpaceID) {
             ImmersiveView()
+                .environment(gestureModel)
         }
         .immersionStyle(selection: $immersionStyle, in: .full)
         
