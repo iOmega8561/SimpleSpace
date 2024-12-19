@@ -31,6 +31,7 @@ struct StarSelectionView: View {
                     }
                 }
             }
+            .navigationTitle("Stars")
             
         } detail: {
             
