@@ -35,25 +35,28 @@ struct PlanetDetailView: View {
                     .fontWeight(.bold)
                     .padding(.top)
 
-                PlanetVolumeButton()
-
                 Text(planet.description)
                     .font(.body)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal)
                 
-                if planet.name == "Earth" {
+                HStack {
+                    
+                    PlanetVolumeButton()
                     
                     Button("Explore planet's orbit") {
                         
                         Task(priority: .userInitiated) { @MainActor in
 
-                            await openImmersiveSpace(id: .planetOrbitImmersiveID)
+                            await openImmersiveSpace(
+                                id: .planetOrbitImmersiveID
+                            )
                             
                             dismissWindow(id: .contentViewID)
                         }
                     }
-                    .font(.title2)
+                    .disabled(planet.name != "Earth")
+                    
                 }
                 
                 Divider()
