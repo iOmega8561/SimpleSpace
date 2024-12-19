@@ -30,7 +30,7 @@ struct PlanetOrbitButton: View {
             .padding()
             
             Button("Back") {
-                dismissWindow(id: .buttonOverlayID)
+                dismissWindow(id: .planetOrbitButtonID)
                 
                 Task(priority: .userInitiated) { @MainActor in
                     

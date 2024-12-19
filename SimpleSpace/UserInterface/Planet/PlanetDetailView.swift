@@ -48,7 +48,7 @@ struct PlanetDetailView: View {
                         
                         Task(priority: .userInitiated) { @MainActor in
 
-                            await openImmersiveSpace(id: .immersiveSpaceID)
+                            await openImmersiveSpace(id: .planetOrbitImmersiveID)
                             
                             dismissWindow(id: .contentViewID)
                         }
@@ -103,6 +103,5 @@ struct PlanetDetailView: View {
             }
             .padding()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

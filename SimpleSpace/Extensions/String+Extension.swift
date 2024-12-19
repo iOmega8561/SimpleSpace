@@ -9,19 +9,19 @@ import Foundation
 
 extension String {
     
-    static var immersiveSpaceID: String {
-        "ImmersiveSpace"
+    static var planetOrbitImmersiveID: String {
+        "PlanetOrbitImmersive"
     }
-    static var immersiveHandTrackingSpaceID: String {
-        "HandTrackingImmersiveSpace"
+    static var starHandTrackingImmersiveID: String {
+        "StarHandTrackingImmersive"
     }
     
     static var contentViewID: String {
         "ContentView"
     }
     
-    static var buttonOverlayID: String {
-        "ButtonOverlay"
+    static var planetOrbitButtonID: String {
+        "PlanetOrbitButton"
     }
     
     static var planetVolumeID: String {

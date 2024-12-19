@@ -16,9 +16,6 @@ struct PlanetOrbitView: View {
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
 
-    let contentViewID = "ContentView"
-    let buttonOverlayID = "ButtonOverlay"
-
     var body: some View {
         
         RealityView { content in
@@ -42,13 +39,13 @@ struct PlanetOrbitView: View {
             }
         }
         .onAppear {
-            openWindow(id: buttonOverlayID)
+            openWindow(id: .planetOrbitButtonID)
         }
     }
     
     private func handleSnapGesture() {
         
-        dismissWindow(id: buttonOverlayID)
+        dismissWindow(id: .planetOrbitButtonID)
         
         Task(priority: .userInitiated) { @MainActor in
             

@@ -26,7 +26,7 @@ struct StarHandTrackingButton: View {
                     
                     if viewModel.isShowing3DStar {
                         await openImmersiveSpace(
-                            id: .immersiveHandTrackingSpaceID
+                            id: .starHandTrackingImmersiveID
                         )
                         
                     } else {

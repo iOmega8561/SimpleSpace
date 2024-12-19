@@ -37,7 +37,6 @@ struct PlanetSelectionView: View {
                 .onAppear {
                     viewModel.isShowing3DPlanet = false
                 }
-            
         }
     }
 }

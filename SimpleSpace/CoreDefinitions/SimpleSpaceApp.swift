@@ -26,13 +26,13 @@ struct SimpleSpaceApp: App {
         }
         .windowResizability(.contentSize)
         
-        WindowGroup(id: .buttonOverlayID) {
+        WindowGroup(id: .planetOrbitButtonID) {
             PlanetOrbitButton()
                 .fixedSize()
         }
         .windowResizability(.contentSize)
         
-        WindowGroup(id: String.planetVolumeID) {
+        WindowGroup(id: .planetVolumeID) {
             PlanetVolumeView()
                 .environment(viewModel)
                 .onDisappear {
@@ -42,7 +42,7 @@ struct SimpleSpaceApp: App {
         .windowStyle(.volumetric)
         .defaultSize(width: 0.6, height: 0.6, depth: 0.6, in: .meters)
         
-        ImmersiveSpace(id: .immersiveSpaceID) {
+        ImmersiveSpace(id: .planetOrbitImmersiveID) {
             PlanetOrbitView()
                 .onDisappear {
                     openWindow(id: .contentViewID)
@@ -51,7 +51,7 @@ struct SimpleSpaceApp: App {
         }
         .immersionStyle(selection: $immersionStyle, in: .full)
         
-        ImmersiveSpace(id: .immersiveHandTrackingSpaceID) {
+        ImmersiveSpace(id: .starHandTrackingImmersiveID) {
             StarHandTrackingView()
                 .environment(gestureModel)
         }
