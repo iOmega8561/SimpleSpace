@@ -152,23 +152,22 @@ class GestureModel: @unchecked Sendable {
                 print("true")
             }
             
-            if wasInContact && (distance > releaseThreshold && distance < 0.1) &&
+            let maxThreshold: Float = 0.1
+            
+            if wasInContact && (distance > releaseThreshold && distance < maxThreshold) &&
                 angleInDegrees >= minSnapAngle && angleInDegrees <= maxSnapAngle {
                 
-                // Ensure the thumb moves towards the palm and the middle finger moves away slightly
                 let thumbToPalmDirection = simd_normalize(leftThumbPosition - leftHandAnchor.handSkeleton!.joint(.middleFingerMetacarpal).anchorFromJointTransform.columns.3.xyz)
                 let thumbSnapMotion = simd_dot(thumbDirection, thumbToPalmDirection)
                 
-                if thumbSnapMotion > 0.3 { // Validate thumb moves towards palm
-                    print("Thanos did it! \(angleInDegrees), at distance \(distance)")
-                    print("thumbtopalm \(thumbSnapMotion), thumbsnap \(thumbSnapMotion)")
+                if thumbSnapMotion > 0.25 {
+                    print("Thanos snapped!")
                     resetState()
                     return true
                 }
             }
         }
         
-        // Update positions for next frame
         previousThumbPosition = leftThumbPosition
         previousMiddleFingerPosition = leftMiddleFingerPosition
         
