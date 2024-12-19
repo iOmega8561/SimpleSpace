@@ -1,6 +1,6 @@
 //
-//  ImmersiveView.swift
-//  Wuozzappen Demo Project
+//  StarHandTrackingView.swift
+//  SimpleSpace
 //
 //  Created by Matt Novoselov on 09/12/24.
 //
@@ -8,20 +8,28 @@
 import SwiftUI
 import RealityKit
 
-struct ImmersiveHandTrackingView: View {
+struct StarHandTrackingView: View {
     
-    @Environment(GestureModel.self) private var gestureModel
-    @State private var sunEntity = SunEntity()
-    @State private var explosionEntity = ExplosionEntity()
+    @Environment(SimpleSpaceGestureModel.self) private var gestureModel
+    
+    @State private var sunEntity: Entity = .sunEntity()
+    @State private var explosionEntity: Entity = .explosionEntity()
 
     var body: some View {
         
         RealityView { content in
-            sunEntity.components.set(OpacityComponent(opacity: 1))
+            
+            sunEntity.components.set(
+                OpacityComponent(opacity: 1)
+            )
+            
             content.add(sunEntity)
+            
         } update: { content in
+            
             let isGestureRecognized = gestureModel.areWristsClose()
-            if isGestureRecognized{
+            
+            if isGestureRecognized {
                 sunEntity.components[OpacityComponent.self]?.opacity = 0
                 content.add(explosionEntity)
             }

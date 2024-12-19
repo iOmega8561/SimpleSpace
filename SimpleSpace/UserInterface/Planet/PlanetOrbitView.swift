@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  PlanetOrbitView.swift
 //  SimpleSpace
 //
 //  Created by Davide Castaldi on 10/12/24.
@@ -9,28 +9,28 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct ImmersiveView: View {
+struct PlanetOrbitView: View {
     
-    @Environment(GestureModel.self) private var gestureModel
+    @Environment(SimpleSpaceGestureModel.self) private var gestureModel
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
 
-    let contentViewID = "ContentView"
-    let buttonOverlayID = "ButtonOverlay"
-
     var body: some View {
         
         RealityView { content in
-            let scene = try? await Entity(named: "Scene", in: realityKitContentBundle)
+            
+            let scene = try? await Entity(
+                named: "Scene",
+                in: realityKitContentBundle
+            )
+            
             content.add(scene!)
             
-            Task {
+            Task(priority: .userInitiated) { @MainActor in
                 await gestureModel.start()
                 await gestureModel.publishHandTrackingUpdates()
             }
-            
-        } update: { content in
             
         }
         .onChange(of: gestureModel.isSnapGestureActivated) { _, isActivated in
@@ -39,12 +39,17 @@ struct ImmersiveView: View {
             }
         }
         .onAppear {
-            openWindow(id: buttonOverlayID)
+            openWindow(id: .planetOrbitButtonID)
         }
     }
     
     private func handleSnapGesture() {
-        dismissWindow(id: buttonOverlayID)
-        Task { await dismissImmersiveSpace() }
+        
+        dismissWindow(id: .planetOrbitButtonID)
+        
+        Task(priority: .userInitiated) { @MainActor in
+            
+            await dismissImmersiveSpace()
+        }
     }
 }

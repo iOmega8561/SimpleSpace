@@ -1,7 +1,9 @@
-/*
-Abstract:
-Extensions and utilities.
-*/
+//
+//  SIMD4+Extension.swift
+//  SimpleSpace
+//
+//  Created by Matt Novoselov on 16/12/24.
+//
 
 import SwiftUI
 

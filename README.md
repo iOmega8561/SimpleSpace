@@ -17,7 +17,7 @@ SimpleSpace is a tool to explore planets and stars. The app is meant to be a dem
 
 ## Contributors
 - [Giuseppe Rocco](https://github.com/iOmega8561): App foundations, with data models and iOS user interface
-- [Davide Castaldi](https://github.com/Dave-Ed-Cast): Eearth's orbit exploration (Immersive Space)
+- [Davide Castaldi](https://github.com/Dave-Ed-Cast): Earth's orbit exploration (Immersive Space and custom Snap gesture)
 - [Salvatore Flauto](https://github.com/XlSolver): Re-adaptation of the user interface for visionOS
 - [Maria Chemerys](https://github.com/MariaChemerys): 3Dimensional planet rapresentations (Volumes)
 - [Matt Novoselov](https://github.com/matt-novoselov): 3Dimensional Sun with hand tracking and gestures

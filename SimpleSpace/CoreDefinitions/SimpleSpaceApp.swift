@@ -15,63 +15,44 @@ struct SimpleSpaceApp: App {
     @Environment(\.openWindow) private var openWindow
     
     @State private var immersionStyle: ImmersionStyle = .mixed
-    @State private var model = ViewModel()
-    @State private var gestureModel = GestureModel()
-    
-    let immersiveSpaceID = "ImmersiveSpace"
-    let immersiveHandTrackingSpaceID = "HandTrackingImmersiveSpace"
-    let contentViewID = "ContentView"
-    let buttonOverlayID = "ButtonOverlay"
-    let planetVolumeID = "PlanetVolume"
+    @State private var viewModel = SimpleSpaceViewModel()
+    @State private var gestureModel = SimpleSpaceGestureModel()
     
     var body: some Scene {
         
-        WindowGroup(id: contentViewID) {
+        WindowGroup(id: .contentViewID) {
             ContentView()
-                .environment(model)
+                .environment(viewModel)
         }
         .windowResizability(.contentSize)
         
-        WindowGroup(id: buttonOverlayID) {
-            ButtonOverlay()
+        WindowGroup(id: .planetOrbitButtonID) {
+            PlanetOrbitButton()
                 .fixedSize()
         }
         .windowResizability(.contentSize)
-        .defaultWindowPlacement { content, context in
-            
-            //place the window in a cool way
-            let size = content.sizeThatFits(.unspecified)
-            if let contentViewWindow = context.windows.first(where: { $0.id == contentViewID }) {
-                
-                dismissWindow(id: contentViewID)
-                return WindowPlacement(.trailing(contentViewWindow), size: size)
-            } else {
-                fatalError("ContentView window not found")
-            }
-        }
         
-        // A volume that displays a planet
-        WindowGroup(id: planetVolumeID) {
+        WindowGroup(id: .planetVolumeID) {
             PlanetVolumeView()
-                .environment(model)
+                .environment(viewModel)
                 .onDisappear {
-                    model.isShowingPlanet = false
+                    viewModel.isShowing3DPlanet = false
                 }
         }
         .windowStyle(.volumetric)
         .defaultSize(width: 0.6, height: 0.6, depth: 0.6, in: .meters)
         
-        ImmersiveSpace(id: immersiveSpaceID) {
-            ImmersiveView()
+        ImmersiveSpace(id: .planetOrbitImmersiveID) {
+            PlanetOrbitView()
                 .onDisappear {
-                    openWindow(id: contentViewID)
+                    openWindow(id: .contentViewID)
                 }
                 .environment(gestureModel)
         }
         .immersionStyle(selection: $immersionStyle, in: .full)
         
-        ImmersiveSpace(id: immersiveHandTrackingSpaceID) {
-            ImmersiveHandTrackingView()
+        ImmersiveSpace(id: .starHandTrackingImmersiveID) {
+            StarHandTrackingView()
                 .environment(gestureModel)
         }
         .persistentSystemOverlays(.hidden)
