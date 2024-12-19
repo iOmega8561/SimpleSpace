@@ -1,5 +1,5 @@
 //
-//  PlanetView.swift
+//  PlanetDetailView.swift
 //  SimpleSpace
 //
 //  Created by Giuseppe Rocco on 10/12/24.

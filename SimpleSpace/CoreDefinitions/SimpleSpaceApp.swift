@@ -27,7 +27,7 @@ struct SimpleSpaceApp: App {
         .windowResizability(.contentSize)
         
         WindowGroup(id: .buttonOverlayID) {
-            PlanetOrbitExitButton()
+            PlanetOrbitButton()
                 .fixedSize()
         }
         .windowResizability(.contentSize)

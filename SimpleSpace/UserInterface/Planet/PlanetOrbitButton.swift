@@ -1,5 +1,5 @@
 //
-//  PlanetOrbitExitButton.swift
+//  PlanetOrbitButton.swift
 //  SimpleSpace
 //
 //  Created by Davide Castaldi on 09/12/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlanetOrbitExitButton: View {
+struct PlanetOrbitButton: View {
     
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.openWindow) private var openWindow
