@@ -30,6 +30,7 @@ struct PlanetSelectionView: View {
                 }
                 
             }
+            .navigationTitle("Planets")
             
         } detail: {
             
