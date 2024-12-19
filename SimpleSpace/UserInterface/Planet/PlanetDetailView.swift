@@ -1,5 +1,5 @@
 //
-//  StarView.swift
+//  PlanetView.swift
 //  SimpleSpace
 //
 //  Created by Giuseppe Rocco on 10/12/24.
@@ -7,82 +7,93 @@
 
 import SwiftUI
 
-struct StarView: View {
-    @Environment(ViewModel.self) private var model
+struct PlanetDetailView: View {
     
-    var star: Star
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissWindow) private var dismissWindow
+    
+    var planet: Planet
     
     var body: some View {
         ScrollView {
+            
             VStack(spacing: 20) {
-                // Star Image
-                Image(star.imgname)
+                
+                Image(planet.imgname)
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
                     .frame(width: 300, height: 300)
                     .clipShape(Circle())
                     .overlay(
                         Circle()
-                            .stroke(Color.orange, lineWidth: 4)
+                            .stroke(Color.blue, lineWidth: 4)
                     )
                     .shadow(radius: 10)
                 
-                // Star Name
-                Text(star.name)
+                Text(planet.name)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top)
-                
-                // Show
-                if star.name == "Sun"{
-                    ImmersionViewButton()
-                }
-                
-                // Star Description
-                Text(star.description)
+
+                PlanetVolumeButton()
+
+                Text(planet.description)
                     .font(.body)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal)
                 
+                if planet.name == "Earth" {
+                    
+                    Button("Explore planet's orbit") {
+                        
+                        Task(priority: .userInitiated) { @MainActor in
+
+                            await openImmersiveSpace(id: .immersiveSpaceID)
+                            
+                            dismissWindow(id: .contentViewID)
+                        }
+                    }
+                    .font(.title2)
+                }
+                
                 Divider()
                 
-                // Star Details
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
-                        Text("Type:")
+                        Text("Diameter:")
                             .fontWeight(.semibold)
                         Spacer()
-                        Text(star.type)
+                        Text("\(planet.diameter, specifier: "%.0f") km")
                     }
                     HStack {
                         Text("Mass:")
                             .fontWeight(.semibold)
                         Spacer()
-                        Text("\(star.mass, specifier: "%.2e") kg")
+                        Text("\(planet.mass, specifier: "%.2e") kg")
                     }
                     HStack {
-                        Text("Radius:")
+                        Text("Distance from Sun:")
                             .fontWeight(.semibold)
                         Spacer()
-                        Text("\(star.radius, specifier: "%.0f") km")
+                        Text("\(planet.distanceFromSun, specifier: "%.1f") million km")
                     }
                     HStack {
-                        Text("Luminosity:")
+                        Text("Orbital Period:")
                             .fontWeight(.semibold)
                         Spacer()
-                        Text("\(star.luminosity, specifier: "%.1f") L☉")
+                        Text("\(planet.orbitalPeriod, specifier: "%.0f") Earth days")
                     }
                     HStack {
-                        Text("Distance from Earth:")
+                        Text("Number of Moons:")
                             .fontWeight(.semibold)
                         Spacer()
-                        Text("\(star.distanceFromEarth, specifier: "%.1f") light-years")
+                        Text("\(planet.numberOfMoons)")
                     }
                     HStack {
-                        Text("Age:")
+                        Text("Has Rings:")
                             .fontWeight(.semibold)
                         Spacer()
-                        Text("\(star.age, specifier: "%.1f") billion years")
+                        Text(planet.hasRings ? "Yes" : "No")
                     }
                 }
                 .padding()
@@ -92,8 +103,6 @@ struct StarView: View {
             }
             .padding()
         }
-        .onAppear {
-            model.isShowingPlanet = false
-        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

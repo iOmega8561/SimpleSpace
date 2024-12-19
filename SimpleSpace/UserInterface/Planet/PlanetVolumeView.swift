@@ -10,14 +10,19 @@ import RealityKit
 import RealityKitContent
 
 struct PlanetVolumeView: View {
-    @Environment(ViewModel.self) private var model
+    @Environment(SimpleSpaceViewModel.self) private var viewModel
 
     var body: some View {
         RealityView { content in
 
             do {
-                let planetEntity = try await Entity(named: model.planetShown?.name ?? "Earth", in: realityKitContentBundle)
+                let planetEntity = try await Entity(
+                    named: viewModel.selectedPlanet?.name ?? planets.first!.name,
+                    in: realityKitContentBundle
+                )
+                
                 content.add(planetEntity)
+                
             } catch {
                 print("Failed to load the planet entity: \(error.localizedDescription)")
             }

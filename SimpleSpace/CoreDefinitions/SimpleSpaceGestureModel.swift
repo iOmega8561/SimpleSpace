@@ -1,15 +1,17 @@
-/*
-Abstract:
-Hand tracking updates.
-*/
+//
+//  SimpleSpaceGestureModel.swift
+//  SimpleSpace
+//
+//  Created by Mariia Chemerys on 15.12.2024.
+//
 
 import ARKit
 import SwiftUI
 
-/// A model that contains up-to-date hand coordinate information.
 @MainActor
 @Observable
-class GestureModel: @unchecked Sendable {
+class SimpleSpaceGestureModel {
+    
     let session = ARKitSession()
     var handTracking = HandTrackingProvider()
     var latestHandTracking: HandsUpdates = .init(left: nil, right: nil)
@@ -37,7 +39,8 @@ class GestureModel: @unchecked Sendable {
         }
         
         // Continuously check for the snap gesture in a loop.
-        Task {
+        Task(priority: .userInitiated) {
+            
             await monitorSnapGesture()
         }
     }
