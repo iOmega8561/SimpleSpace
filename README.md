@@ -1,5 +1,19 @@
 # SimpleSpace
-SimpleSpace is a tool to explore planets and stars. The app is meant to be a demostration project to explore visionOS capabilities.
+SimpleSpace is a tool to explore the space and know more about <strong>astronomical objects</strong>.  
+
+The application is meant to be a demostration project to explore <strong>visionOS</strong> capabilities, and is the product of a combined effort to offer an example solution to common spatial computing challenges. This project targets the following challenges of Apple Vision Pro development:
+- Using an <strong>iOS application</strong> as the foundation of a visionOS project,
+- Improving navigation, adopting a more space-filling oriented approach,
+- Exploring <strong>Volumetric Views</strong> and their lifecycle/management,
+- Exploring <strong>Immersive Spaces</strong> and their lifecycle/management,
+- Learning to use physical <strong>tracking capabilities</strong> of visionOS,
+- Implementing <strong>custom gestures</strong> that can be used to trigger events,
+- Facing <strong>resource management</strong> and background tasks.
+
+> [!NOTE]
+> This project is intended as a foundational starting point for further development. While the core functionality is implemented, it <strong>purposely</strong> lacks the robustness, optimizations, and quality that might be expected from a production solution.
+>
+> We recommend using this as a basis for experimentation and learning 🚀
 
 ## Getting Started
 ### Requirements
